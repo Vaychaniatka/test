@@ -8,8 +8,7 @@ foreach ($news as $news_item): ?>
     </p>
     <p><a href="view/<?php echo $news_item['id'] ?>">View article</a></p>
 
-    <form action='/news/delete/$id'>
-        <button type="submit">Delete</button>
-    </form>
+
+   <p> <a href='/news/delete/<?php echo $news_item['id'] ?>'>Delete</a></p>
 
 <?php endforeach ?>

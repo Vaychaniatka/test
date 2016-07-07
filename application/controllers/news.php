@@ -61,14 +61,15 @@ class News extends CI_Controller
         }
         else
         {
-            $this->news_model->set_news();
+            $this->newsModel->set_news();
             $this->load->view('news/success');
         }
     }
 
     public function delete($id)
     {
-        $this->news_model->delete_news($id);
+        $this->newsModel->delete_news($id);
+        
     }
 
     public function update()
