@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="keywords should be here" />
     <meta name="description" content="here should be description" />
-    <link href="<?php echo base_url('application/media/css/workPage.css');?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url('/media/css/workPage.css');?>" rel="stylesheet" type="text/css" />
     <title><?php
         if (isset($title)){
             echo $title;

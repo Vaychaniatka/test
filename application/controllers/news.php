@@ -28,13 +28,13 @@ class News extends CI_Controller
 
     public function index()
     {
-       //$data['news'] = $this->newsModel->get_news();
+
        // $data[news]=$this->newsModel->get_news();
         $data['title'] = 'News archive';
         //$this->load->view('pages/template', $data);
         //$data['content'] = $this->load->view( 'pages/news/index');
         $this->load->view('templates/header',$data);
-        $this->load->view('pages/news/index');
+        $this->load->view('pages/news/index',['news' => $this->newsModel->get_news()]);
         $this->load->view('templates/footer');
 
         /*var_dump($data);die();*/
@@ -68,7 +68,7 @@ class News extends CI_Controller
 
     public function delete($id)
     {
-
+        $this->news_model->delete_news($id);
     }
 
     public function update()

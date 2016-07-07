@@ -20,9 +20,9 @@ class NewsModel extends CI_Model
         return $query->row_array();
     }
 
-    public function delete_news()
+    public function delete_news($id)
     {
-
+        $this->db->delete('news', array('id' => $id));
     }
 
     public function create_news()

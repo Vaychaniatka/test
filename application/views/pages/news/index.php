@@ -1,4 +1,4 @@
-<?php /*var_dump($news);die();*/
+<?php
 $news=$this->newsModel->get_news();
 foreach ($news as $news_item): ?>
 
@@ -7,5 +7,9 @@ foreach ($news as $news_item): ?>
         <?php echo $news_item['content'] ?>
     </p>
     <p><a href="view/<?php echo $news_item['id'] ?>">View article</a></p>
+
+    <form action='/news/delete/$id'>
+        <button type="submit">Delete</button>
+    </form>
 
 <?php endforeach ?>
