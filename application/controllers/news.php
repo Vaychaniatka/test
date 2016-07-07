@@ -12,19 +12,29 @@ class News extends CI_Controller
 
     public function view($id)
     {
-        $data['news'] = $this->newsModel->get_news($id);
-        //var_dump($data['news']);die();
+        $data['news_item'] = $this->newsModel->get_news($id);
+        //var_dump($data['news_item']);die();
+        if (empty($data['news_item']))
+        {
+            show_404();
+        }
 
+        //$data['title'] = $data['news_item']['title'];
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/news/view', $data);
+        $this->load->view('templates/footer');
     }
 
     public function index()
     {
-       $data['news'] = $this->newsModel->get_news();
+       //$data['news'] = $this->newsModel->get_news();
+       // $data[news]=$this->newsModel->get_news();
         $data['title'] = 'News archive';
-        /*$this->load->view('pages/template', $data);*/
-        $data['content'] = $this->load->view( 'pages/news/index');
+        //$this->load->view('pages/template', $data);
+        //$data['content'] = $this->load->view( 'pages/news/index');
         $this->load->view('templates/header',$data);
-        $this->load->view('pages/news/index',$data);
+        $this->load->view('pages/news/index');
         $this->load->view('templates/footer');
 
         /*var_dump($data);die();*/

@@ -1,4 +1,5 @@
 <?php /*var_dump($news);die();*/
+$news=$this->newsModel->get_news();
 foreach ($news as $news_item): ?>
 
     <h2><?php echo $news_item['name'] ?></h2>
