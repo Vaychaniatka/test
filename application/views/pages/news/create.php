@@ -1,4 +1,4 @@
-<h2>Создание нового элемента</h2>
+<h2>Create new item</h2>
 
 <?php echo validation_errors(); ?>
 
@@ -13,3 +13,4 @@
 <input type="submit" name="submit" value="Create news item" />
 
 </form>
+<p><a href='/news/index'>Back</a> </p>

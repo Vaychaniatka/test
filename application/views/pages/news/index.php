@@ -1,5 +1,6 @@
+<p><a href='/news/create'>Create new item</a> </p>
 <?php
-$news=$this->newsModel->get_news();
+
 foreach ($news as $news_item): ?>
 
     <h2><?php echo $news_item['name'] ?></h2>

@@ -12,35 +12,22 @@ class News extends CI_Controller
 
     public function view($id)
     {
-        $data['news_item'] = $this->newsModel->get_news($id);
-        //var_dump($data['news_item']);die();
-        if (empty($data['news_item']))
+        $data['content']= $this->load->view('pages/news/view',['news_item' => $this->newsModel->get_news($id)],true);
+        
+        if (empty($this->newsModel->get_news($id)))
         {
             show_404();
         }
 
-        //$data['title'] = $data['news_item']['title'];
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('pages/news/view', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('pages/template', $data);
     }
 
     public function index()
     {
-
-       // $data[news]=$this->newsModel->get_news();
+        $data['news']=$this->newsModel->get_news();
         $data['title'] = 'News archive';
-        //$this->load->view('pages/template', $data);
-        //$data['content'] = $this->load->view( 'pages/news/index');
-        $this->load->view('templates/header',$data);
-        $this->load->view('pages/news/index',['news' => $this->newsModel->get_news()]);
-        $this->load->view('templates/footer');
-
-        /*var_dump($data);die();*/
-
-
-
+        $data['content'] = $this->load->view( 'pages/news/index',['news'=>$this->newsModel->get_news()],true);
+        $this->load->view('pages/template', $data);
     }
 
     public function create()
@@ -61,19 +48,22 @@ class News extends CI_Controller
         }
         else
         {
-            $this->newsModel->set_news();
-            $this->load->view('news/success');
+            $this->newsModel->create_news();
+            $data['title']='Success message';
+            $data['content']=$this->load->view('pages/news/success',[],true);
+            $this->load->view('pages/template',$data);
         }
     }
 
     public function delete($id)
     {
+        $data['title']= 'Success message';
+
         $this->newsModel->delete_news($id);
-        
+        $this->load->view('templates/header',$data);
+        $this->load->view('pages/news/success');
+        $this->load->view('templates/footer');
     }
 
-    public function update()
-    {
 
-    }
 }

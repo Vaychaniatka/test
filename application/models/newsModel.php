@@ -27,6 +27,8 @@ class NewsModel extends CI_Model
 
     public function create_news()
     {
-        
+        $data['name']= $this->input->post('title');
+        $data['content']=$this->input->post('text');
+        return $this->db->insert('news', $data);
     }
 }

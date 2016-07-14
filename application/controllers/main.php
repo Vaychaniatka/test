@@ -1,23 +1,14 @@
 <?php
 class Main extends CI_Controller{
-    public function view($page){
-       if  (empty($page))
-        {
-            $page='home';
-        }
+    public function view(){
+        $this->load->helper('url');
+       
+        $data['title'] = 'Main';
+        $data['content']= $this->load->view('pages/main/hello',[],true);
 
-        if ( ! file_exists('application/views/pages/template.php'))
-        {
-            // Упс, у нас нет такой страницы!
-           show_404();
-        }
-        $data['title'] = ucfirst($page); // Сделать первую букву заглавной
+        $this->load->view('pages/template', $data);
 
-        //var_dump($data);die();
-        /*$this->load->view('templates/header', $data);
-        $this->load->view('pages/'.$page, $data);
-        $this->load->view('templates/footer', $data);*/
-        $this->load->view('pages/template.php', $data);
+
     }
 
 }
