@@ -1,5 +1,5 @@
-<p><a href='/news/create'>Create new item</a> </p>
-<?php
+<?php if(isset($this->session->userdata['logon'])){
+echo "<p><a href='/news/create'>Create new item</a> </p>" ;}
 
 foreach ($news as $news_item): ?>
 
@@ -10,6 +10,9 @@ foreach ($news as $news_item): ?>
     <p><a href="view/<?php echo $news_item['id'] ?>">View article</a></p>
 
 
-   <p> <a href='/news/delete/<?php echo $news_item['id'] ?>'>Delete</a></p>
+    <?php if(isset($this->session->userdata['logon'])){
+        $n=$news_item['id'];
+        echo "<p> <a href='/news/delete/$n'>Delete</a></p>";
+    }
 
-<?php endforeach ?>
+endforeach ?>

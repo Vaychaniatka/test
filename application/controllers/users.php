@@ -20,9 +20,9 @@ class Users extends CI_Controller
         $data['title']='Create new user';
         $data['content']=$this->load->view('pages/users/add',[],true);
 
-        $this->form_validation->set_rules('name', 'name', 'required');
-        $this->form_validation->set_rules('email', 'email', 'required');
-        $this->form_validation->set_rules('password', 'password', 'required');
+        $this->form_validation->set_rules('name', 'name', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('email', 'email', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() === FALSE)
         {
@@ -55,12 +55,13 @@ class Users extends CI_Controller
             $passControl=$this->usersModel->getPass($user_name);
             if($pass===$passControl)
             {
+                session_start();
                 $session_data['logon']='yes';
                 $session_data['user_name']=$user_name;
                 $this->session->set_userdata($session_data);
-                redirect('');
+                
             }
-            redirect('main/view');
+            redirect('');
 
         }
 
@@ -68,6 +69,7 @@ class Users extends CI_Controller
 
     public function logOff()
     {
+        //$this->session->unset_userdata['logon'];
         $this->session->sess_destroy();
         redirect('');
     }

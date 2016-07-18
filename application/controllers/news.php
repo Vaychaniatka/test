@@ -38,8 +38,8 @@ class News extends CI_Controller
         $data['title'] = 'Create a news item';
         $data['content']= $this->load->view('pages/news/create',[],true);
 
-        $this->form_validation->set_rules('title', 'title', 'required');
-        $this->form_validation->set_rules('text', 'text', 'required');
+        $this->form_validation->set_rules('title', 'title', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('text', 'text', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() === FALSE)
         {
@@ -63,6 +63,27 @@ class News extends CI_Controller
         $this->load->view('templates/header',$data);
         $this->load->view('pages/news/success');
         $this->load->view('templates/footer');
+    }
+    
+    public function addComment($id)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('text', 'text', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() === FALSE)
+        {
+            redirect('news/view');
+
+        }
+        else
+        {
+            $this->newsModel->add_comment($id);
+            $data['title']='Success message';
+            $data['content']=$this->load->view('pages/news/success',[],true);
+            $this->load->view('pages/template',$data);
+        }
     }
 
 
