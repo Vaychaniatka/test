@@ -32,12 +32,18 @@ class NewsModel extends CI_Model
         return $this->db->insert('news', $data);
     }
 
-    public function add_comment($id)
+    public function add_comment()
     {
         $data['text']=$this->input->post('text');
-        $data['news_id']=$id;
+        $data['news_id']=$this->input->post('id');
         $data['user_name']=$this->session->userdata['user_name'];
-        //var_dump($id);die();
+        //var_dump($this->input->post('id'));die();
         return $this->db->insert('comments', $data);
+    }
+
+    public function  get_comments($id)
+    {
+        $query=$this->db->get_where('comments',array('news_id'=>$id));
+        return $query->result_array();
     }
 }

@@ -12,7 +12,10 @@ class News extends CI_Controller
 
     public function view($id)
     {
-        $data['content']= $this->load->view('pages/news/view',['news_item' => $this->newsModel->get_news($id)],true);
+        $cont_arr=array(
+        'comments'=>$this->newsModel->get_comments($id),
+        'news_item'=>$this->newsModel->get_news($id));
+        $data['content']= $this->load->view('pages/news/view',['cont_arr'=>$cont_arr],true);
         
         if (empty($this->newsModel->get_news($id)))
         {
@@ -65,7 +68,7 @@ class News extends CI_Controller
         $this->load->view('templates/footer');
     }
     
-    public function addComment($id)
+    public function addComment()
     {
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -74,12 +77,16 @@ class News extends CI_Controller
 
         if ($this->form_validation->run() === FALSE)
         {
-            redirect('news/view');
+            $n=$this->input->post('id');
+            //var_dump($n);die();
+            redirect('');
 
         }
         else
         {
-            $this->newsModel->add_comment($id);
+
+            //var_dump($this->input->post('id'));die();
+            $this->newsModel->add_comment();
             $data['title']='Success message';
             $data['content']=$this->load->view('pages/news/success',[],true);
             $this->load->view('pages/template',$data);
