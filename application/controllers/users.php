@@ -58,7 +58,7 @@ class Users extends CI_Controller
         if(isset($pass)&& isset($usrName))
         {
             $this->usersModel->setUserData($_POST['user_name']);
-            if($pass===$this->usersModel1->getPassword())
+            if($pass===$this->usersModel->getPassword())
             {
                 session_start();
                 $session_data['logon']='yes';

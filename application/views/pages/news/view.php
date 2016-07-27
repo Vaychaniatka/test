@@ -6,16 +6,19 @@ $comments=$cont_arr['comments'];
 echo '<h2>'.$news_item['name'].'</h2>';
 echo $news_item['content'].'<br/>';
 $nId=$news_item['id'];
-    echo '<h2>Comments:</h2>';
+//if (isset ($comments))
+//{
+//echo '<h2>Comments:</h2>';
 foreach ($comments as $comm_item):
     echo '<p>'.$comm_item['user_name'].':</p>';
     echo '<p>'.$comm_item['text'].'</p><br/>';
-    if ($comm_item['user_id']===$this->session->userdata['user_id'])
+    if ((isset($this->session->userdata['user_id']))&&($comm_item['user_id']===$this->session->userdata['user_id']))
     {
         $n=$comm_item['id'];
         echo "<p><a href='/comments/delete/$n'>Delete this comment</a></p>";
     }
     endforeach;
+//}
 //var_dump($id);die();
  if(isset($this->session->userdata['logon'])){
      echo validation_errors();

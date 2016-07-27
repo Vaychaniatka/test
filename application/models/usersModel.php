@@ -1,6 +1,6 @@
 <?php
 
-class UsersModel1 extends MY_Model
+class UsersModel extends MY_Model
 {
     protected $tableName='user';
     protected $id;
