@@ -5,7 +5,7 @@ class Users extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('usersModel1');
+        $this->load->model('usersModel');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('session');
@@ -35,7 +35,7 @@ class Users extends CI_Controller
             $userData['password']=$this->input->post('password');
             $userData['email']=$this->input->post('email');
             $userData['authorised']=FALSE;
-            $this->usersModel1->addUser($userData);
+            $this->usersModel->addUser($userData);
             $data['title']='Success message';
             $data['content']=$this->load->view('pages/news/success','',true);
             $this->load->view('pages/template',$data);
@@ -46,23 +46,24 @@ class Users extends CI_Controller
     {
         $data['title']='Log In';
         //$users=$this->usersModel1->getUsers();
-        $data['content']=$this->load->view('pages/users/index',['users'=>$this->usersModel1->getUsers()],true);
+        $data['content']=$this->load->view('pages/users/index',['users'=>$this->usersModel->getUsers()],true);
         $this->load->view('pages/template', $data);
 
     }
 
     public function logIn()
     {
-        if(isset($_POST['password']))
+        $pass=$_POST['password'];
+        $usrName=$_POST['user_name'];
+        if(isset($pass)&& isset($usrName))
         {
-            $pass=$_POST['password'];//var_dump($_POST['user_name']);die;
-            $user_name=$_POST['user_name'];
-            $passControl=$this->usersModel->getPass($user_name);
-            if($pass===$passControl)
+            $this->usersModel->setUserData($_POST['user_name']);
+            if($pass===$this->usersModel1->getPassword())
             {
                 session_start();
                 $session_data['logon']='yes';
-                $session_data['user_name']=$user_name;
+                $session_data['user_name']=$this->usersModel->getName();
+                $session_data['user_id']=$this->usersModel->getID();
                 $this->session->set_userdata($session_data);
                 
             }
@@ -74,7 +75,6 @@ class Users extends CI_Controller
 
     public function logOff()
     {
-        //$this->session->unset_userdata['logon'];
         $this->session->sess_destroy();
         redirect('');
     }

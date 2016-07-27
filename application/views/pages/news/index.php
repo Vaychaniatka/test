@@ -10,7 +10,7 @@ foreach ($news as $news_item): ?>
     <p><a href="view/<?php echo $news_item['id'] ?>">View article</a></p>
 
 
-    <?php if(isset($this->session->userdata['logon'])){
+    <?php if(isset($this->session->userdata['logon'])&&($news_item['user_id']===$this->session->userdata['user_id'])){
         $n=$news_item['id'];
         echo "<p> <a href='/news/delete/$n'>Delete</a></p>";
     }

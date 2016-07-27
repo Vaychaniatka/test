@@ -1,49 +1,75 @@
 <?php
 
-
-class NewsModel extends CI_Model
+class NewsModel extends MY_Model
 {
+    protected $tableName='news';
+    protected $name;
+    protected $content;
+    protected $user_id;
+
     public function __construct()
     {
-        $this->load->database();
+        parent::__construct();
+    }
+
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
+    public function setTableName($tableName)
+    {
+        $this->tableName = $tableName;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    public function create_news($newsData)
+    {
+        foreach ($newsData as $key=>$value)
+        {
+            $this->setProperty($key,$value);
+        }
+        $this->save();
     }
 
     public function get_news($id = FALSE)
     {
         if ($id === FALSE)
         {
-            $query = $this->db->get('news');
+            $query = $this->db->get($this->tableName);
             return $query->result_array();
         }
 
-        $query = $this->db->get_where('news', array('id' => $id));
+        $query = $this->db->get_where($this->tableName, array('id' => $id));
         return $query->row_array();
     }
 
     public function delete_news($id)
     {
-        $this->db->delete('news', array('id' => $id));
-    }
-
-    public function create_news()
-    {
-        $data['name']= $this->input->post('title');
-        $data['content']=$this->input->post('text');
-        return $this->db->insert('news', $data);
-    }
-
-    public function add_comment()
-    {
-        $data['text']=$this->input->post('text');
-        $data['news_id']=$this->input->post('id');
-        $data['user_name']=$this->session->userdata['user_name'];
-        //var_dump($this->input->post('id'));die();
-        return $this->db->insert('comments', $data);
-    }
-
-    public function  get_comments($id)
-    {
-        $query=$this->db->get_where('comments',array('news_id'=>$id));
-        return $query->result_array();
+        $this->db->delete($this->tableName, array('id' => $id));
     }
 }

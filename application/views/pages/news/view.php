@@ -10,11 +10,16 @@ $nId=$news_item['id'];
 foreach ($comments as $comm_item):
     echo '<p>'.$comm_item['user_name'].':</p>';
     echo '<p>'.$comm_item['text'].'</p><br/>';
+    if ($comm_item['user_id']===$this->session->userdata['user_id'])
+    {
+        $n=$comm_item['id'];
+        echo "<p><a href='/comments/delete/$n'>Delete this comment</a></p>";
+    }
     endforeach;
 //var_dump($id);die();
  if(isset($this->session->userdata['logon'])){
      echo validation_errors();
-     echo form_open('news/addComment');
+     echo form_open('comments/addComment');
 
 
      echo form_hidden('id',$nId);

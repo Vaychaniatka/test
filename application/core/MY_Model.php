@@ -2,8 +2,8 @@
 
 class MY_Model extends CI_Model
 {
-    private $excludeVars=[];
-    private $tableName;
+    private $excludeVars=['id'];
+    protected $tableName;
 
     public function __construct()
     {
@@ -33,9 +33,11 @@ class MY_Model extends CI_Model
         $vars=$this->getAvailibleVars();
         foreach ($vars as $key=>$value)
         {
-            $this->db->set($key,$value);
-            $this->db->insert($this->tableName);
-
+            $prop=$value;
+            $propName=$this->getPropety($value);
+            $this->db->set($prop,$propName);
         }
+        $this->db->insert($this->tableName);
+
     }
 }
