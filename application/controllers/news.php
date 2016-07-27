@@ -63,9 +63,8 @@ class News extends CI_Controller
         $data['title']= 'Success message';
 
         $this->newsModel->delete_news($id);
-        $this->load->view('templates/header',$data);
-        $this->load->view('pages/news/success');
-        $this->load->view('templates/footer');
+        $this->load->view('pages/news/success',[],true);
+        $this->load->view('pages/template');
     }
     
     public function addComment()

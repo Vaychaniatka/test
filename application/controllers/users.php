@@ -5,7 +5,7 @@ class Users extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('usersModel');
+        $this->load->model('usersModel1');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('session');
@@ -18,7 +18,7 @@ class Users extends CI_Controller
         $this->load->library('form_validation');
 
         $data['title']='Create new user';
-        $data['content']=$this->load->view('pages/users/add',[],true);
+        $data['content']=$this->load->view('pages/users/add','',true);
 
         $this->form_validation->set_rules('name', 'name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('email', 'email', 'trim|required|xss_clean');
@@ -31,9 +31,13 @@ class Users extends CI_Controller
         }
         else
         {
-            $this->usersModel->addUser();
+            $userData['name']=$this->input->post('name');
+            $userData['password']=$this->input->post('password');
+            $userData['email']=$this->input->post('email');
+            $userData['authorised']=FALSE;
+            $this->usersModel1->addUser($userData);
             $data['title']='Success message';
-            $data['content']=$this->load->view('pages/news/success',[],true);
+            $data['content']=$this->load->view('pages/news/success','',true);
             $this->load->view('pages/template',$data);
         }
     }
@@ -41,7 +45,8 @@ class Users extends CI_Controller
     public function index()
     {
         $data['title']='Log In';
-        $data['content']=$this->load->view('pages/users/index',['users'=>$this->usersModel->getUsers()],true);
+        //$users=$this->usersModel1->getUsers();
+        $data['content']=$this->load->view('pages/users/index',['users'=>$this->usersModel1->getUsers()],true);
         $this->load->view('pages/template', $data);
 
     }

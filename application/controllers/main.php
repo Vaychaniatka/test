@@ -4,7 +4,7 @@ class Main extends CI_Controller{
         $this->load->helper('url');
        
         $data['title'] = 'Main';
-        $data['content']= $this->load->view('pages/main/hello',[],true);
+        $data['content']= $this->load->view('pages/main/hello','',true);
 
         $this->load->view('pages/template', $data);
 
